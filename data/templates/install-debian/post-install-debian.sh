@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Copyright 2015-2017, Dell EMC, Inc.
 # create SSH key for root
 <% if ('undefined' !== typeof rootSshKey && null !== rootSshKey) { -%>
 mkdir /root/.ssh
@@ -11,9 +11,9 @@ chown -R root:root /root/.ssh
 <% if (typeof users !== 'undefined') { -%>
 <% users.forEach(function(user) { -%>
     <%_ if (undefined !== user.uid) { _%>
-        useradd -u <%=user.uid%> -m -p '<%=user.encryptedPassword%>' <%=user.name%>
+        useradd -u <%=user.uid%> -m -p '<%-user.encryptedPassword%>' <%=user.name%>
     <%_ } else {_%>
-        useradd -m -p '<%=user.encryptedPassword%>' <%=user.name%>
+        useradd -m -p '<%-user.encryptedPassword%>' <%=user.name%>
     <%_ } _%>
     <%_ if (undefined !== user.sshKey) { _%>
 mkdir /home/<%=user.name%>/.ssh
@@ -22,3 +22,4 @@ chown -R <%=user.name%>:<%=user.name%> /home/<%=user.name%>/.ssh
     <%_ } _%>
 <% }); -%>
 <% } -%>
+
